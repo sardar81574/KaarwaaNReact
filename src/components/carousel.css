@@ -1,0 +1,115 @@
+:root {
+  --primary-gold: #b38e44;
+  --bg-white: #ffffff;
+  --card-bg: #ffffff;
+  --border-color: #e0e0e0; /* Defined border so cards don't disappear */
+  --text-main: #121212;
+  --text-muted: #666666;
+  --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.carousel-section {
+  background-color: var(--bg-white);
+  padding: 100px 0;
+  overflow: hidden;
+}
+
+/* Fix: Centering the header and giving it weight */
+.carousel-header {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.carousel-header h2 {
+  color: var(--text-main);
+  font-size: 2.8rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.carousel-viewport {
+  position: relative;
+  width: 100%;
+  /* This creates the "infinite" fade at the edges */
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.carousel-track {
+  display: flex;
+  gap: 40px; /* Increased gap for breathing room */
+  width: max-content;
+  padding: 40px 0;
+}
+
+/* The Zig-Zag Fix */
+.carousel-card.offset-up { transform: translateY(-30px); }
+.carousel-card.offset-down { transform: translateY(30px); }
+
+.carousel-card {
+  width: 300px;
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.card-glass {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px; /* Sharper corners look more professional than super-round */
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.02); /* Very subtle base shadow */
+}
+
+.image-container {
+  width: 130px;
+  height: 130px;
+  border-radius: 12px; /* Matching card corners */
+  margin-bottom: 25px;
+  position: relative;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--transition);
+}
+
+/* Floating Badge Effect for Role */
+.card-content h3 {
+  color: var(--text-main);
+  font-size: 1.25rem;
+  margin: 0 0 10px 0;
+  font-family: serif; /* Elegant contrast for names */
+  font-weight: 700;
+}
+
+.card-content p {
+  color: var(--primary-gold); /* Gold roles look better on white */
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 800;
+  margin: 0;
+}
+
+/* Hover: The "Pop Out" effect */
+.carousel-card:hover {
+  transform: translateY(0) scale(1.05) !important; /* Force reset zigzag on hover */
+  z-index: 50;
+}
+
+.carousel-card:hover .card-glass {
+  border-color: var(--primary-gold);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+}
+
+.carousel-card:hover img {
+  transform: scale(1.1);
+}
