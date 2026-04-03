@@ -9,9 +9,9 @@ import bg from "../asset/bg1.jpg";
 import teaching from "../asset/teachingpics.jpeg";
 import grpimg from '../asset/img1.jpg'
 import nukkad from '../asset/nukkad2oct24.jpg';
-import { CheckCircle2 } from "lucide-react";  
 import { Link } from "react-router-dom";
  import Footer from "../components/Footer";
+ import ZigZagCarousel from "../components/carousel";
 import { 
   MapPin, 
   Phone, 
