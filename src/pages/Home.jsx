@@ -1,6 +1,5 @@
 import React from "react";
 import Hero from "../section/Hero";
-import ZigZagCarousel from "../components/carousel";
 import clothimg from '../asset/img2.jpg';
 import plantingtree from '../asset/img7.jpg';
 import jeclogo from '../asset/jeclogo.png'
@@ -11,7 +10,7 @@ import grpimg from '../asset/img1.jpg'
 import nukkad from '../asset/nukkad2oct24.jpg';
 import { Link } from "react-router-dom";
  import Footer from "../components/Footer";
- import ZigZagCarousel from "../components/carousel";
+ import ZigZagCarousel from '../components/Carousel'
 import { 
   MapPin, 
   Phone, 
