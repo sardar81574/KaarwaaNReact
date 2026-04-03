@@ -1,6 +1,7 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
+
 const batches = [
   {
     year: "2023–27",
@@ -10,7 +11,7 @@ const batches = [
       { name: "Mr. Ankit Raj Singh", role: "Superintendent", img: "/img/mbr2023_27/AniketR.jpeg" },
       { name: "Ms. Payal Sisodiya", role: "Vice President", img: "/img/mbr2023_27/PayalS.jpeg" },
       { name: "Mr. Deependra Mahobiya", role: "Secretary", img: "/img/mbr2023_27/DeependraM.jpeg" },
-      { name: "Ms. Naina Bharti", role: "Secretary", img: null },
+      { name: "Ms. Naina Bharti", role: "Secretary", img: "/img/mbr2023_27/Naina.jpeg" },
       { name: "Mr. Devesh Pandey", role: "Secretary", img: "/img/mbr2023_27/DeveshP.jpeg" },
       { name: "Mr. Nihal Jain", role: "Treasurer", img: "/img/mbr2023_27/NihalJ.jpeg" },
       { name: "Ms. Mahima Parte", role: "Media Head", img: null },
@@ -22,14 +23,14 @@ const batches = [
       { name: "Mr. Karan Sahu", role: "Technical Head", img: "/img/mbr2023_27/KaranSahu.jpg" },
       { name: "Mr. Arpit Selotkar", role: "Orphanage Head", img: "/img/mbr2023_27/ArpitS.jpeg" },
       { name: "Ms. Khushbhu Patel", role: "Orphanage Head", img: "/img/mbr2023_27/KhusbooP.jpeg" },
-      { name: "Ms. Kapil Patidar", role: "Orphanage Head", img: null },
+      { name: "Mr. Kapil Patidar", role: "Orphanage Head", img: "/img/mbr2023_27/KapilP.png" },
       { name: "Mr. Arjun Kurmi", role: "Event Manager", img: null },
-      { name: "Mr. Yash Bhadoriya", role: "Event Manager", img: null },
-      { name: "Mr. Kohima Dharne", role: "Event Manager", img: null },
+      { name: "Mr. Yash Bhadoriya", role: "Event Manager", img: "/img/mbr2023_27/YashB.jpeg" },
+      { name: "Ms. Kohima Dharne", role: "Event Manager", img: null },
       { name: "Mr. Ganesh Dhakad", role: "Exam Co-ordinator", img: null },
       { name: "Mr. Raja Shaw", role: "Exam Co-ordinator", img: "/img/mbr2023_27/RajaS.jpeg" },
       { name: "Mr. Kashish Sonker", role: "Exam Co-ordinator", img: "/img/mbr2023_27/KashishS.jpeg" },
-      { name: "Mr. Priyesh Rajak", role: "Core-Team Member", img: null },
+      { name: "Mr. Priyesh Rajak", role: "Core-Team Member", img: "/img/mbr2023_27/PriyeshR.jpeg" },
       { name: "Mr. Pushpendra Tomar", role: "Core-Team Member", img: null },
       { name: "Mr. Uday Jain", role: "Core-Team Member", img: null },
       { name: "Mr. Chetan Amne", role: "Core-Team Member", img: "/img/mbr2023_27/ChetanA.jpeg" },
@@ -53,10 +54,10 @@ const batches = [
       { name: "Ms. Somya Raghuwanshi", role: "Teaching Head", img: null },
       { name: "Mr. Chinmay Prakash Jha", role: "Teaching Head", img: null },
       { name: "Ms. Devanshi Jain", role: "Technical Head", img: null },
-      { name: "Mr. Yashashvi Sharma", role: "Technical Head", img: null },
+      { name: "Ms. Yashashvi Sharma", role: "Technical Head", img: '/img/mbr2022_26/YashasviS.jpeg'},
       { name: "Mr. Atharv Tiwari", role: "Orphanage Head", img: '/img/mbr2022_26/AtharvT.jpg' },
       { name: "Ms. Aayushi Patidar", role: "Orphanage Head", img: null },
-      { name: "Ms. Aman Sahu", role: "Orphanage Head", img: null },
+      { name: "Mr. Aman Sahu", role: "Orphanage Head", img: null },
       { name: "Mr. Anurag Soni", role: "Event Manager", img: null },
       { name: "Mr. Ranvijay Kumar Upadhyay", role: "Event Manager", img: '/img/mbr2022_26/RanvijayU.png' },
       { name: "Mr. Pranav Kumar Gupta", role: "Event Manager", img: null },
@@ -278,46 +279,41 @@ const batches = [
   },
 ];
 
-const roleColors = {
-  President: { bg: "#FEF3C7", text: "#92400E", dot: "#F59E0B" },
-  Superintendent: { bg: "#EDE9FE", text: "#5B21B6", dot: "#8B5CF6" },
-  "Vice President": { bg: "#DBEAFE", text: "#1E40AF", dot: "#3B82F6" },
-  Secretary: { bg: "#D1FAE5", text: "#065F46", dot: "#10B981" },
-  Treasurer: { bg: "#FEE2E2", text: "#991B1B", dot: "#EF4444" },
-  "Media Head": { bg: "#FCE7F3", text: "#9D174D", dot: "#EC4899" },
-  "Teaching Head": { bg: "#E0F2FE", text: "#0C4A6E", dot: "#0EA5E9" },
-  "Technical Head": { bg: "#F0FDF4", text: "#14532D", dot: "#22C55E" },
-  "Orphanage Head": { bg: "#FFF7ED", text: "#9A3412", dot: "#F97316" },
-  "Event Manager": { bg: "#F5F3FF", text: "#4C1D95", dot: "#7C3AED" },
-  "Exam Co-ordinator": { bg: "#ECFDF5", text: "#064E3B", dot: "#059669" },
-  "Core Member": { bg: "#F8FAFC", text: "#334155", dot: "#64748B" },
-  "Core-Team Member": { bg: "#F0F9FF", text: "#0C4A6E", dot: "#38BDF8" },
-  Member: { bg: "#F8FAFC", text: "#334155", dot: "#94A3B8" },
-  "Vice-President": { bg: "#DBEAFE", text: "#1E40AF", dot: "#3B82F6" },
-};
+// Unified, professional color scaling based on leadership tiers
+function getRoleTheme(role) {
+  const executives = ["President", "Vice President", "Vice-President", "Superintendent", "Secretary", "Treasurer"];
+  const heads = ["Media Head", "Teaching Head", "Technical Head", "Orphanage Head", "Event Manager", "Exam Co-ordinator"];
+  
+  if (executives.includes(role)) {
+    return { bg: "#EFF6FF", text: "#1E3A8A", border: "#BFDBFE" }; // Deep Blue for Executives
+  }
+  if (heads.includes(role)) {
+    return { bg: "#ECFDF5", text: "#065F46", border: "#A7F3D0" }; // Emerald for Core Heads
+  }
+  // Default for Core Members / Members
+  return { bg: "#F8FAFC", text: "#334155", border: "#E2E8F0" }; // Slate for Members
+}
 
 function isFemale(name) {
   return name.trim().startsWith("Ms.");
 }
 
-function MaleAvatarSVG({ size = 56 }) {
+function AvatarFallback({ female }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="28" cy="28" r="28" fill="#DBEAFE" />
-      <circle cx="28" cy="20" r="9" fill="#93C5FD" />
-      <path d="M10 50c0-9.94 8.06-18 18-18s18 8.06 18 18" fill="#3B82F6" />
-      <path d="M25 32 l3 5 l3-5" fill="#1D4ED8" />
-    </svg>
-  );
-}
-
-function FemaleAvatarSVG({ size = 56 }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="28" cy="28" r="28" fill="#FCE7F3" />
-      <circle cx="28" cy="20" r="9" fill="#F9A8D4" />
-      <path d="M19 18 Q19 9 28 9 Q37 9 37 18" fill="#EC4899" />
-      <path d="M14 50 Q14 32 28 32 Q42 32 42 50" fill="#EC4899" />
+    <svg width="80" height="80" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="28" cy="28" r="28" fill={female ? "#FCE7F3" : "#E0F2FE"} />
+      <circle cx="28" cy="20" r="9" fill={female ? "#F472B6" : "#7DD3FC"} />
+      {female ? (
+        <>
+          <path d="M19 18 Q19 9 28 9 Q37 9 37 18" fill="#DB2777" />
+          <path d="M14 50 Q14 32 28 32 Q42 32 42 50" fill="#DB2777" />
+        </>
+      ) : (
+        <>
+          <path d="M10 50c0-9.94 8.06-18 18-18s18 8.06 18 18" fill="#0284C7" />
+          <path d="M25 32 l3 5 l3-5" fill="#0369A1" />
+        </>
+      )}
     </svg>
   );
 }
@@ -325,7 +321,7 @@ function FemaleAvatarSVG({ size = 56 }) {
 function MemberCard({ member }) {
   const [imgError, setImgError] = useState(false);
   const female = isFemale(member.name);
-  const roleStyle = roleColors[member.role] || roleColors["Member"];
+  const theme = getRoleTheme(member.role);
   const hasImage = member.img && !imgError;
   const cleanName = member.name.replace(/^(Mr\.|Ms\.|Mrs\.)\s*/i, "").trim();
   const prefix = member.name.match(/^(Mr\.|Ms\.|Mrs\.)/i)?.[0] || "";
@@ -334,35 +330,36 @@ function MemberCard({ member }) {
     <div
       style={{
         background: "#fff",
-        borderRadius: 16,
-        border: "1px solid #F1F5F9",
-        padding: "0 0 14px 0",
+        borderRadius: "16px",
+        border: "1px solid #E2E8F0",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
-        gap: 0,
         overflow: "hidden",
-        transition: "box-shadow 0.2s, transform 0.2s",
+        transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
         cursor: "default",
+        boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
       }}
-      onMouseEnter={e => {
-        e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.10)";
-        e.currentTarget.style.transform = "translateY(-3px)";
+      onMouseEnter={(e) => {
+        e.currentTarget.style.boxShadow = "0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04)";
+        e.currentTarget.style.transform = "translateY(-6px)";
+        e.currentTarget.style.borderColor = theme.border;
       }}
-      onMouseLeave={e => {
-        e.currentTarget.style.boxShadow = "none";
+      onMouseLeave={(e) => {
+        e.currentTarget.style.boxShadow = "0 1px 3px rgba(0,0,0,0.05)";
         e.currentTarget.style.transform = "translateY(0)";
+        e.currentTarget.style.borderColor = "#E2E8F0";
       }}
     >
+      {/* Aspect Ratio container ensures uniform size without chopping heads */}
       <div style={{
         width: "100%",
-        height: 130,
-        background: hasImage ? "#F1F5F9" : (female ? "#FDF2F8" : "#EFF6FF"),
+        aspectRatio: "1 / 1", 
+        background: hasImage ? "#F8FAFC" : (female ? "#FDF2F8" : "#F0F9FF"),
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         overflow: "hidden",
-        flexShrink: 0,
+        borderBottom: "1px solid #F1F5F9"
       }}>
         {hasImage ? (
           <img
@@ -373,40 +370,39 @@ function MemberCard({ member }) {
               width: "100%",
               height: "100%",
               objectFit: "cover",
-              objectPosition: "top center",
+              objectPosition: "top center", // Keeps the face in view
               display: "block",
             }}
           />
         ) : (
-          female ? <FemaleAvatarSVG size={72} /> : <MaleAvatarSVG size={72} />
+          <AvatarFallback female={female} />
         )}
       </div>
 
-      <div style={{ textAlign: "center", padding: "10px 10px 0", width: "100%" }}>
-        <div style={{ fontSize: 11, color: "#94A3B8", fontWeight: 400, lineHeight: 1.2 }}>
-          {prefix}
+      <div style={{ padding: "20px 16px", display: "flex", flexDirection: "column", flexGrow: 1, justifyContent: "space-between" }}>
+        <div>
+          <div style={{ fontSize: "12px", color: "#64748B", fontWeight: 500, marginBottom: "2px" }}>
+            {prefix}
+          </div>
+          <div style={{ fontWeight: 700, fontSize: "17px", color: "#0F172A", lineHeight: 1.3 }}>
+            {cleanName}
+          </div>
         </div>
-        <div style={{ fontWeight: 600, fontSize: 12.5, color: "#1E293B", lineHeight: 1.4, marginTop: 1 }}>
-          {cleanName}
-        </div>
-      </div>
 
-      <div style={{ marginTop: 8, paddingInline: 8 }}>
-        <span style={{
-          background: roleStyle.bg,
-          color: roleStyle.text,
-          fontSize: 10.5,
-          fontWeight: 600,
-          padding: "3px 9px",
-          borderRadius: 20,
-          display: "inline-flex",
-          alignItems: "center",
-          gap: 4,
-          whiteSpace: "nowrap",
-        }}>
-          <span style={{ width: 5, height: 5, borderRadius: "50%", background: roleStyle.dot, display: "inline-block", flexShrink: 0 }} />
-          {member.role}
-        </span>
+        <div style={{ marginTop: "16px" }}>
+          <span style={{
+            background: theme.bg,
+            color: theme.text,
+            border: `1px solid ${theme.border}`,
+            fontSize: "12px",
+            fontWeight: 600,
+            padding: "4px 12px",
+            borderRadius: "6px",
+            display: "inline-block",
+          }}>
+            {member.role}
+          </span>
+        </div>
       </div>
     </div>
   );
@@ -417,58 +413,57 @@ function BatchSection({ batch, defaultOpen }) {
   const isCurrentBatch = batch.label === "Current Batch";
 
   return (
-    <div style={{ marginBottom: 16 }}>
+    <div style={{ marginBottom: "24px" }}>
       <button
-        onClick={() => setOpen(o => !o)}
+        onClick={() => setOpen((o) => !o)}
         style={{
           width: "100%",
-          background: isCurrentBatch ? "#7C3AED" : "#F8FAFC",
+          background: isCurrentBatch ? "#0F172A" : "#FFFFFF",
           border: isCurrentBatch ? "none" : "1px solid #E2E8F0",
-          borderRadius: open ? "12px 12px 0 0" : 12,
-          padding: "14px 20px",
+          borderRadius: open ? "12px 12px 0 0" : "12px",
+          padding: "18px 24px",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
           cursor: "pointer",
-          transition: "background 0.2s",
+          transition: "all 0.2s ease",
+          boxShadow: isCurrentBatch ? "0 4px 6px -1px rgba(0,0,0,0.1)" : "none",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
           <span style={{
             fontWeight: 700,
-            fontSize: 17,
-            color: isCurrentBatch ? "#fff" : "#1E293B",
-            fontFamily: "Georgia, serif",
+            fontSize: "18px",
+            color: isCurrentBatch ? "#FFFFFF" : "#0F172A",
           }}>
             Batch {batch.year}
           </span>
           {isCurrentBatch && (
             <span style={{
-              background: "#FDE68A",
-              color: "#92400E",
-              fontSize: 11,
-              fontWeight: 700,
-              padding: "2px 10px",
-              borderRadius: 20,
+              background: "#3B82F6",
+              color: "#FFFFFF",
+              fontSize: "12px",
+              fontWeight: 600,
+              padding: "4px 12px",
+              borderRadius: "20px",
+              letterSpacing: "0.5px",
+              textTransform: "uppercase"
             }}>
-              ✦ Current
+              Current
             </span>
           )}
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <span style={{ fontSize: 12, fontWeight: 500, color: isCurrentBatch ? "#C4B5FD" : "#94A3B8" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <span style={{ fontSize: "14px", fontWeight: 500, color: isCurrentBatch ? "#94A3B8" : "#64748B" }}>
             {batch.members.length} members
           </span>
           <span style={{
-            width: 24, height: 24, borderRadius: "50%",
-            background: isCurrentBatch ? "#ffffff33" : "#E2E8F0",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            color: isCurrentBatch ? "#fff" : "#64748B",
-            fontSize: 14,
-            transition: "transform 0.2s",
+            color: isCurrentBatch ? "#FFFFFF" : "#64748B",
+            transition: "transform 0.3s ease",
             transform: open ? "rotate(180deg)" : "none",
+            display: "inline-block"
           }}>
-            ▾
+            ▼
           </span>
         </div>
       </button>
@@ -478,13 +473,14 @@ function BatchSection({ batch, defaultOpen }) {
           border: "1px solid #E2E8F0",
           borderTop: "none",
           borderRadius: "0 0 12px 12px",
-          padding: "20px",
-          background: "#FAFBFF",
+          padding: "32px",
+          background: "#F8FAFC",
         }}>
+          {/* Much larger grid layout for bigger cards */}
           <div style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(130px, 1fr))",
-            gap: 12,
+            gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
+            gap: "24px",
           }}>
             {batch.members.map((m, i) => (
               <MemberCard key={i} member={m} />
@@ -513,91 +509,129 @@ export default function TeamAlumni() {
       const matchSearch =
         m.name.toLowerCase().includes(search.toLowerCase()) ||
         m.role.toLowerCase().includes(search.toLowerCase());
-      const matchRole =
-        filterRole === "All" || m.role === filterRole;
+      const matchRole = filterRole === "All" || m.role === filterRole;
       return matchSearch && matchRole;
     }),
   })).filter(b => b.members.length > 0);
 
   const totalMembers = batches.reduce((acc, b) => acc + b.members.length, 0);
 
-  return ( <div>
-    <div style={{ fontFamily: "'Segoe UI', system-ui, sans-serif", maxWidth: 1000, margin: "0 auto", padding: "32px 20px" }}>
-      <div style={{ textAlign: "center", marginBottom: 36, marginTop: 35 }}>
-        <h1 style={{
-          fontSize: 38, fontWeight: 800, color: "#0F172A",
-          margin: "0 0 8px", fontFamily: "Georgia, serif", letterSpacing: -1,
+  return (
+    <div>
+      <div style={{ fontFamily: "Inter, system-ui, sans-serif", maxWidth: "1280px", margin: "0 auto", padding: "48px 24px" }}>
+        
+        <div style={{ textAlign: "center", marginBottom: "56px" }}>
+          <h1 style={{
+            fontSize: "46px", 
+            fontWeight: 800, 
+            color: "#0F172A",
+            margin: "0 0 16px", 
+            letterSpacing: "-1px"
+          }}>
+            Our Team & Alumni
+          </h1>
+          <p style={{ color: "#64748B", fontSize: "18px", margin: "0 0 32px", maxWidth: "600px", marginInline: "auto" }}>
+            Celebrating {totalMembers}+ members across {batches.length} batches of impact and leadership since 2011.
+          </p>
+          
+          <div style={{ display: "flex", justifyContent: "center", gap: "24px", flexWrap: "wrap" }}>
+            {[
+              { label: "Batches", value: batches.length },
+              { label: "Total Members", value: `${totalMembers}+` },
+              { label: "Years Active", value: "15+" },
+            ].map((s, i) => (
+              <div key={i} style={{
+                background: "#FFFFFF", 
+                border: "1px solid #E2E8F0",
+                boxShadow: "0 1px 2px rgba(0,0,0,0.05)",
+                borderRadius: "16px", 
+                padding: "16px 32px", 
+                textAlign: "center",
+                minWidth: "160px"
+              }}>
+                <div style={{ fontWeight: 800, fontSize: "32px", color: "#0F172A" }}>{s.value}</div>
+                <div style={{ fontSize: "14px", color: "#64748B", fontWeight: 500, marginTop: "4px" }}>{s.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Search & Filter Bar */}
+        <div style={{ 
+          display: "flex", 
+          gap: "16px", 
+          marginBottom: "40px", 
+          flexWrap: "wrap",
+          background: "#FFFFFF",
+          padding: "16px",
+          borderRadius: "16px",
+          border: "1px solid #E2E8F0",
+          boxShadow: "0 4px 6px -1px rgba(0,0,0,0.05)"
         }}>
-          Our Team & Alumni
-        </h1>
-        <p style={{ color: "#64748B", fontSize: 15, margin: "0 0 20px" }}>
-          Celebrating {totalMembers}+ members across {batches.length} batches since 2011
-        </p>
-        <div style={{ display: "flex", justifyContent: "center", gap: 24, flexWrap: "wrap" }}>
-          {[
-            { label: "Batches", value: batches.length },
-            { label: "Total Members", value: `${totalMembers}+` },
-            { label: "Years of Service", value: "15+" },
-          ].map((s, i) => (
-            <div key={i} style={{
-              background: "#F8FAFC", border: "1px solid #E2E8F0",
-              borderRadius: 12, padding: "10px 24px", textAlign: "center",
-            }}>
-              <div style={{ fontWeight: 800, fontSize: 22, color: "#7C3AED" }}>{s.value}</div>
-              <div style={{ fontSize: 12, color: "#94A3B8", fontWeight: 500 }}>{s.label}</div>
-            </div>
-          ))}
+          <input
+            type="text"
+            placeholder="Search members by name or role..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            style={{
+              flex: "1 1 300px", 
+              padding: "14px 20px",
+              border: "1px solid #CBD5E1", 
+              borderRadius: "8px",
+              fontSize: "16px", 
+              outline: "none", 
+              background: "#F8FAFC",
+              color: "#0F172A",
+              transition: "border-color 0.2s"
+            }}
+            onFocus={(e) => e.target.style.borderColor = "#3B82F6"}
+            onBlur={(e) => e.target.style.borderColor = "#CBD5E1"}
+          />
+          <select
+            value={filterRole}
+            onChange={e => setFilterRole(e.target.value)}
+            style={{
+              padding: "14px 20px", 
+              border: "1px solid #CBD5E1",
+              borderRadius: "8px", 
+              fontSize: "16px", 
+              background: "#F8FAFC",
+              color: "#0F172A", 
+              cursor: "pointer",
+              minWidth: "200px",
+              outline: "none"
+            }}
+          >
+            {allRoles.map(r => <option key={r} value={r}>{r}</option>)}
+          </select>
         </div>
-      </div>
 
-      <div style={{ display: "flex", gap: 12, marginBottom: 28, flexWrap: "wrap" }}>
-        <input
-          type="text"
-          placeholder="Search by name or role..."
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          style={{
-            flex: 1, minWidth: 200, padding: "10px 16px",
-            border: "1px solid #E2E8F0", borderRadius: 10,
-            fontSize: 14, outline: "none", background: "#fff",
-            color: "#1E293B",
-          }}
-        />
-        <select
-          value={filterRole}
-          onChange={e => setFilterRole(e.target.value)}
-          style={{
-            padding: "10px 16px", border: "1px solid #E2E8F0",
-            borderRadius: 10, fontSize: 13, background: "#fff",
-            color: "#1E293B", cursor: "pointer",
-          }}
-        >
-          {allRoles.map(r => <option key={r}>{r}</option>)}
-        </select>
-      </div>
+        {/* Batch Lists */}
+        {filteredBatches.length === 0 ? (
+          <div style={{ textAlign: "center", padding: "80px 20px", color: "#64748B", fontSize: "18px", background: "#F8FAFC", borderRadius: "16px" }}>
+            No members found matching your search criteria.
+          </div>
+        ) : (
+          filteredBatches.map((batch, i) => (
+            <BatchSection key={batch.year} batch={batch} defaultOpen={i === 0} />
+          ))
+        )}
 
-      {filteredBatches.length === 0 ? (
-        <div style={{ textAlign: "center", padding: "60px 20px", color: "#94A3B8" }}>
-          No members found matching your search.
+        <div style={{
+          textAlign: "center", 
+          marginTop: "56px", 
+          padding: "24px",
+          background: "#F8FAFC", 
+          borderRadius: "12px",
+          border: "1px solid #E2E8F0",
+        }}>
+          <p style={{ color: "#475569", fontSize: "15px", margin: 0 }}>
+            We apologize if your name is missing or information is incorrect. Please contact our web team at <strong>7440682926</strong>.
+          </p>
         </div>
-      ) : (
-        filteredBatches.map((batch, i) => (
-          <BatchSection key={batch.year} batch={batch} defaultOpen={i === 0} />
-        ))
-      )}
-
-      <div style={{
-        textAlign: "center", marginTop: 40, padding: 20,
-        background: "#FFF7ED", borderRadius: 12,
-        border: "1px solid #FED7AA",
-      }}>
-        <p style={{ color: "#9A3412", fontSize: 13, margin: 0 }}>
-          We apologize if your name is not listed. Please contact our web team at <strong>7440682926</strong>.
-        </p>
+        
       </div>
-      
-    </div>
-    <Footer/>
+      <Footer />
     </div>
   );
 }
