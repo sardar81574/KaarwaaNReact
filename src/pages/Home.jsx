@@ -60,12 +60,13 @@ const EffortSection = ({ img, title, text, reverse, badge, buttonText }) => (
 const Home = () => {
   
   const commonText = "We are a group of students committed to teaching and supporting underprivileged children, helping them prepare for Navodaya, Gyanodaya, and similar entrance exams. Our goal is simple: to make quality education accessible, build strong academic foundations, and give every child a fair chance to succeed through guidance, consistency, and care. From filling their entrance exam registration form to preparing them every single day and taking them to exam center we did it all the way so that they did not feel lack in any aspect.";
-
+  const clothDonationtext = "We are a group of students who believe that basic necessities should never be a luxury, which is why our cloth donation drives aim to bring warmth and dignity to marginalized communities. Our goal is simple: to bridge the gap between abundance and necessity, ensuring no one has to face harsh weather without proper clothing. From running door-to-door collection campaigns and meticulously sorting garments by size, to personally distributing them in the most vulnerable areas, we handle the entire process to ensure every contribution brings a genuine smile.";
+  const socialEventsText = "We are deeply passionate about driving grassroots change and raising public awareness through impactful social events like cleanliness drives, Nukkad Nataks (street plays), and orphanage visits. Our goal is simple: to spark meaningful conversations, break societal stigmas, and foster a strong sense of community empathy among the youth. From brainstorming creative scripts and organizing event logistics, to spending quality, compassionate time with the elderly and orphans, we pour our hearts into every single initiative so that our efforts create a lasting ripple effect in society."
+  const TreePlantation = "We are dedicated to restoring our environment and fighting climate change through organized, sustained tree plantation drives across our local communities. Our goal is simple: to increase the green cover, promote environmental consciousness, and leave behind a healthier, breathing planet for future generations. From identifying suitable barren lands and selecting the right native saplings, to planting them with care and continuously returning to water and maintain them, we don't just drop seeds in the ground—we actively nurture them to ensure they survive and thrive."
   return (
     <div className="w-full bg-white overflow-x-hidden font-sans">
       <Hero />
 
-      {/* --- ABOUT SECTION (Parallax) --- */}
     <section className="relative py-24 bg-gradient-to-b from-white to-gray-50 overflow-hidden">
   
   {/* Decorative Background Blob (Lightweight) */}
@@ -138,7 +139,6 @@ const Home = () => {
   </div>
 </section>
 
-      {/* --- OUR EFFORTS TITLE --- */}
       <div className="py-16 text-center bg-gray-50">
         <p className="text-sm font-bold text-emerald-600 uppercase tracking-[0.2em] mb-2">What We Do</p>
         <h2 className="text-5xl font-black text-gray-900">Our Efforts</h2>
@@ -161,7 +161,7 @@ const Home = () => {
         <EffortSection 
           img={clothimg}
           title="Cloth Donation Drives"
-          text={commonText}
+          text={clothDonationtext}
           reverse={true}
           buttonText="Warming Society"
         />
@@ -170,7 +170,7 @@ const Home = () => {
         <EffortSection 
           img={plantingtree}
           title="Tree Plantation"
-          text={commonText}
+          text={TreePlantation}
           reverse={false}
           buttonText="Green Initiatives"
         />
@@ -179,9 +179,9 @@ const Home = () => {
         <EffortSection 
           img={kevent}
           title="Social Events & Celebrations"
-          text={commonText}
+          text={socialEventsText}
           reverse={true}
-          buttonText="View Event Gallery"
+          buttonText="Social reforming"
         />
       </div>
 
