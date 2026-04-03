@@ -51,7 +51,7 @@ const batches = [
       { name: "Mr. Yatendra Pachori", role: "Media Head", img: null },
       { name: "Mr. Anshul Payasi", role: "Media Head", img: null },
       { name: "Ms. Shratika Agarwal", role: "Teaching Head", img: '/img/mbr2022_26/Shratika.jpeg' },
-      { name: "Ms. Somya Raghuwanshi", role: "Teaching Head", img: null },
+      { name: "Ms. Somya Raghuwanshi", role: "Teaching Head", img: '/img/mbr2022_26/somyaR.jpeg' },
       { name: "Mr. Chinmay Prakash Jha", role: "Teaching Head", img: null },
       { name: "Ms. Devanshi Jain", role: "Technical Head", img: '/img/mbr2022_26/DvnshiJ.jpeg' },
       { name: "Ms. Yashashvi Sharma", role: "Technical Head", img: '/img/mbr2022_26/YashasviS.jpeg'},
